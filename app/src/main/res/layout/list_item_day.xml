@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/day_line_item_width"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@drawable/btn_background"
+    android:textColor="@color/scheduler_day_line_color_state" />

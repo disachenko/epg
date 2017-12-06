@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="toolbar" type="id" />
+    <item name="toolbar_center_image" type="id" />
+    <item name="toolbar_left_button" type="id" />
+    <item name="toolbar_right_button" type="id" />
+
+</resources>

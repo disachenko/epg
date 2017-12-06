@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SIMPLE COLORS -->
+    <color name="transparent">@android:color/transparent</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dark_gray">#202020</color>
+    <color name="gray">#8E8E8E</color>
+    <color name="orange">#E1A21E</color>
+
+    <color name="color_primary">@color/black</color>
+    <color name="color_primary_dark">@color/black</color>
+    <color name="color_accent">@color/orange</color>
+    <color name="toolbar_color">@color/color_primary</color>
+    <color name="divider_color">#333333</color>
+    <color name="accent_button">@color/gray</color>
+
+    <!--TV scheduler-->
+    <color name="current_program_background">#393939</color>
+    <color name="program_background">#111111</color>
+    <color name="program_active_background">#333333</color>
+
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ToolbarStyle">
+
+    <ImageView
+        style="@style/ToolbarLeftButtonStyle"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@id/toolbar_center_image"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/toolbar_size"
+        android:layout_weight="1"
+        android:padding="@dimen/padding_small"
+        android:scaleType="fitCenter"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        style="@style/ToolbarRightButtonStyle"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>

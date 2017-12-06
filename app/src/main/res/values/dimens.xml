@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- GLOBAL -->
+    <dimen name="menu_height">56dp</dimen>
+    <dimen name="toolbar_size">@dimen/menu_height</dimen>
+    <dimen name="toolbar_icon_width">56dp</dimen>
+    <dimen name="list_item_height">48dp</dimen>
+    <dimen name="elevation">8dp</dimen>
+
+    <!-- PADDINGS -->
+    <dimen name="padding_huge">24dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_normal">12dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_micro">4dp</dimen>
+    <dimen name="padding_nano">2dp</dimen>
+    <dimen name="padding_default">@dimen/padding_medium</dimen>
+
+    <!-- FONT SIZES -->
+    <dimen name="font_size_huge">24sp</dimen>
+    <dimen name="font_size_large">20sp</dimen>
+    <dimen name="font_size_medium">16sp</dimen>
+    <dimen name="font_size_micro">12sp</dimen>
+    <dimen name="font_size_default">@dimen/font_size_medium</dimen>
+
+    <!--Program Schedule screen-->
+    <dimen name="program_height">70dp</dimen>
+    <dimen name="day_line_item_width">70dp</dimen>
+    <dimen name="time_line_hour_width">220dp</dimen>
+    <dimen name="divider_size">2dp</dimen>
+
+</resources>
