@@ -5,10 +5,12 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.noriginmedia.epg.R;
 import com.noriginmedia.epg.common.AndroidUtils;
 import com.noriginmedia.epg.presentation.epg.EpgFragment;
+import com.noriginmedia.epg.presentation.home.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,18 +27,33 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         AndroidUtils.removeShiftMode(navigationView);
-        navigationView.setOnNavigationItemSelectedListener(item -> {
-            Fragment fragment;
-            switch (item.getItemId()) {
-                case R.id.schedule:
-                    fragment = new EpgFragment();
-                    break;
-                default:
-                    fragment = new Fragment();
-            }
-            final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.container, fragment).commit();
-            return true;
-        });
+        navigationView.setOnNavigationItemSelectedListener(this::showScreen);
+        navigationView.setSelectedItemId(R.id.schedule);
+    }
+
+    private boolean showScreen(MenuItem item) {
+        Fragment fragment;
+        switch (item.getItemId()) {
+            case R.id.home:
+                fragment = HomeFragment.newInstance("Home");
+                break;
+            case R.id.tv:
+                fragment = HomeFragment.newInstance("TV");
+                break;
+            case R.id.schedule:
+                fragment = new EpgFragment();
+                break;
+            case R.id.history:
+                fragment = HomeFragment.newInstance("History");
+                break;
+            case R.id.profile:
+                fragment = HomeFragment.newInstance("Profile");
+                break;
+            default:
+                throw new IllegalStateException("Invalid navigation menu item id: " + item.getItemId());
+        }
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment).commit();
+        return true;
     }
 }

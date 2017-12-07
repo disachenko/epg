@@ -16,9 +16,9 @@ import java.util.TimeZone;
 
 public class DateUtils {
 
-    public final static String DATE_TIME_PATTERN_SERVER = "yyyy-MM-dd'T'HH:mm:ssX";
-    public final static String DAY_MONTH_PATTERN = "dd.MM";
-    public final static String TIME_PATTERN = "HH:mm";
+    public static final String DATE_TIME_PATTERN_SERVER = "yyyy-MM-dd'T'HH:mm:ssX";
+    public static final String DAY_MONTH_PATTERN = "dd.MM";
+    public static final String TIME_PATTERN = "HH:mm";
 
     public static final int HOUR = 60 * 60 * 1000;
     public static final int DAY = 24 * HOUR;
