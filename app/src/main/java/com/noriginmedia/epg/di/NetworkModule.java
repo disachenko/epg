@@ -15,6 +15,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 import okhttp3.OkHttpClient;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -54,6 +56,12 @@ public class NetworkModule {
     @Singleton
     static NetworkDataSource provideNetworkDataSource(Context context, Retrofit retrofit) {
         return new NetworkDataSource(context, retrofit);
+    }
+
+    @Provides
+    @Singleton
+    static Subject<Boolean> provideNetworkStatePublisher() {
+        return PublishSubject.create();
     }
 
 }

@@ -3,6 +3,7 @@ package com.noriginmedia.epg.common;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.internal.BottomNavigationItemView;
@@ -18,6 +19,12 @@ public class AndroidUtils {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = connMgr.getActiveNetworkInfo();
         return info != null && info.isConnectedOrConnecting();
+    }
+
+    public static IntentFilter getNetworkStateIntentFilter() {
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        intentFilter.setPriority(1000);
+        return intentFilter;
     }
 
     @SuppressLint("RestrictedApi")

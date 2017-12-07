@@ -2,7 +2,6 @@ package com.noriginmedia.epg.presentation.epg;
 
 
 import com.noriginmedia.epg.common.DateUtils;
-import com.noriginmedia.epg.data.network.models.NoNetworkException;
 import com.noriginmedia.epg.data.network.models.response.ChannelSchedulesResponse;
 import com.noriginmedia.epg.presentation.BaseObserver;
 
@@ -24,13 +23,12 @@ public class EpgPresenter {
 
     void onViewCreated(EpgScreen view) {
         this.view = view;
-        view.showProgress();
         interactor.getChannelSchedules(new ScheduleObserver(view));
     }
 
     void onDestroyView() {
-        view = null;
         interactor.dropSubscriptions();
+        view = null;
     }
 
     void onEpgScrollEvent(long timestamp) {
@@ -50,7 +48,7 @@ public class EpgPresenter {
         }
 
         @Override
-        public void onSuccess(ChannelSchedulesResponse response) {
+        public void onNext(ChannelSchedulesResponse response) {
             view.setDates(dates = getDates(response.getStartDate(), response.getEndDate()));
             view.setEpg(response.getChannels());
             view.hideProgress();

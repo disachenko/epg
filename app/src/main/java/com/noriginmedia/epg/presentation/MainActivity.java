@@ -7,10 +7,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.noriginmedia.epg.App;
 import com.noriginmedia.epg.R;
 import com.noriginmedia.epg.common.AndroidUtils;
 import com.noriginmedia.epg.presentation.epg.EpgFragment;
 import com.noriginmedia.epg.presentation.home.HomeFragment;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,10 +24,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.navigation_view)
     BottomNavigationView navigationView;
 
+    @Inject
+    NetworkChangeReceiver networkChangeReceiver;
+
     private Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((App) getApplicationContext()).getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
@@ -32,10 +39,13 @@ public class MainActivity extends AppCompatActivity {
         AndroidUtils.removeShiftMode(navigationView);
         navigationView.setOnNavigationItemSelectedListener(this::showScreen);
         navigationView.setSelectedItemId(R.id.schedule);
+
+        registerReceiver(networkChangeReceiver, AndroidUtils.getNetworkStateIntentFilter());
     }
 
     @Override
     protected void onDestroy() {
+        unregisterReceiver(networkChangeReceiver);
         unbinder.unbind();
         super.onDestroy();
     }

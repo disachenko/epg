@@ -6,6 +6,7 @@ import com.noriginmedia.epg.data.network.models.Channel;
 import com.noriginmedia.epg.data.network.models.Schedule;
 import com.noriginmedia.epg.data.network.models.response.ChannelSchedulesResponse;
 import com.noriginmedia.epg.presentation.BaseInteractor;
+import com.noriginmedia.epg.presentation.BaseObserver;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,23 +14,22 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.SingleObserver;
+import io.reactivex.subjects.Subject;
 
 
 public class EpgInteractor extends BaseInteractor {
 
-    private final NetworkDataSource networkDataSource;
-
     @Inject
-    public EpgInteractor(NetworkDataSource networkDataSource) {
-        this.networkDataSource = networkDataSource;
+    public EpgInteractor(NetworkDataSource networkDataSource, Subject<Boolean> networkStatePublisher) {
+        super(networkDataSource, networkStatePublisher);
     }
 
-    void getChannelSchedules(SingleObserver<? super ChannelSchedulesResponse> observer) {
-        networkDataSource.getChannelSchedule()
+    void getChannelSchedules(BaseObserver<ChannelSchedulesResponse, ?> observer) {
+        startLoading(networkDataSource.getChannelSchedule(), observer)
                 .map(this::initStartEndDates)
                 .map(this::addPausesToChannel)
-                .compose(baseCall())
+                .compose(retryNoNetwork(observer))
+                .compose(manageSubscription())
                 .subscribe(observer);
     }
 

@@ -8,7 +8,7 @@ import com.noriginmedia.epg.data.network.adapter.ScheduleApiAdapter;
 import com.noriginmedia.epg.data.network.models.NoNetworkException;
 import com.noriginmedia.epg.data.network.models.response.ChannelSchedulesResponse;
 
-import io.reactivex.Single;
+import io.reactivex.Observable;
 import retrofit2.Retrofit;
 
 public class NetworkDataSource implements ScheduleApiAdapter {
@@ -27,12 +27,16 @@ public class NetworkDataSource implements ScheduleApiAdapter {
     }
 
     @Override
-    public Single<ChannelSchedulesResponse> getChannelSchedule() {
+    public Observable<ChannelSchedulesResponse> getChannelSchedule() {
         return call(scheduleApiAdapter.getChannelSchedule());
     }
 
-    private <T> Single<T> call(Single<T> apiMethod) {
-        return AndroidUtils.hasNetworkConnection(appContext) ? apiMethod
-                : Single.error(new NoNetworkException());
+    public boolean hasNetwork() {
+        return AndroidUtils.hasNetworkConnection(appContext);
+    }
+
+    private <T> Observable<T> call(Observable<T> apiMethod) {
+        return Observable.fromCallable(() -> hasNetwork())
+                .flatMap(hasNetwork -> hasNetwork ? apiMethod : Observable.error(new NoNetworkException()));
     }
 }
