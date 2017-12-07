@@ -26,4 +26,10 @@
         <item name="android:textSize">@dimen/font_size_huge</item>
     </style>
 
+    <style name="RootProgressPanelStyle">
+        <item name="android:id">@id/root_progress_panel</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
 </resources>

@@ -3,7 +3,6 @@ package com.noriginmedia.epg.presentation.epg;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.noriginmedia.epg.App;
 import com.noriginmedia.epg.R;
-import com.noriginmedia.epg.common.view.ProgressPanel;
 import com.noriginmedia.epg.data.network.models.Channel;
-import com.noriginmedia.epg.presentation.dagger.DaggerScreenComponent;
+import com.noriginmedia.epg.presentation.BaseFragment;
 import com.noriginmedia.epg.presentation.epg.view.EpgView;
 
 import java.util.List;
@@ -26,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class EpgFragment extends Fragment implements EpgScreen {
+public class EpgFragment extends BaseFragment implements EpgScreen {
 
     @Inject
     EpgPresenter presenter;
@@ -40,9 +37,6 @@ public class EpgFragment extends Fragment implements EpgScreen {
     @BindView(R.id.toolbar_right_button)
     ImageView rightMenuButton;
 
-    @BindView(R.id.progress_panel)
-    ProgressPanel progressPanel;
-
     @BindView(R.id.day_line)
     RecyclerView dayLine;
     private DayLineAdapter dayLineAdapter;
@@ -54,10 +48,8 @@ public class EpgFragment extends Fragment implements EpgScreen {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getScreenComponent().inject(this);
         super.onCreate(savedInstanceState);
-        DaggerScreenComponent.builder()
-                .appComponent(((App) getContext().getApplicationContext()).getAppComponent())
-                .build().inject(this);
     }
 
     @Nullable
@@ -93,16 +85,6 @@ public class EpgFragment extends Fragment implements EpgScreen {
         presenter.onDestroyView();
         unbinder.unbind();
         super.onDestroyView();
-    }
-
-    @Override
-    public void showProgress() {
-        progressPanel.showProgress();
-    }
-
-    @Override
-    public void hideProgress() {
-        progressPanel.hideProgress();
     }
 
     @Override

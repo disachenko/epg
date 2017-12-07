@@ -8,12 +8,22 @@ import android.widget.FrameLayout;
 
 import com.noriginmedia.epg.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * View for showing progress bar above container and intercepting touch events.
  */
 public class ProgressPanel extends FrameLayout {
 
-    private View progressView;
+    @BindView(R.id.container)
+    View container;
+
+    @BindView(R.id.progress)
+    View progress;
+
+    @BindView(R.id.no_network)
+    View noNetwork;
 
     public ProgressPanel(Context context) {
         super(context);
@@ -26,20 +36,34 @@ public class ProgressPanel extends FrameLayout {
     }
 
     private void init() {
-        progressView = LayoutInflater.from(getContext()).inflate(R.layout.view_progress_panel, null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_progress_panel, null);
+        ButterKnife.bind(this, view);
+
+
         //disable all clicks
-        progressView.setOnClickListener(v -> {
+        container.setOnClickListener(v -> {
         });
     }
 
     public final void showProgress() {
-        if (indexOfChild(progressView) < 0) {
-            addView(progressView);
-        }
-        progressView.setVisibility(VISIBLE);
+        show(true, false);
+
     }
 
-    public final void hideProgress() {
-        progressView.setVisibility(GONE);
+    public final void showNoNetwork() {
+        show(false, true);
+    }
+
+    private void show(boolean isProgress, boolean isNoNetwork) {
+        if (indexOfChild(container) < 0) {
+            addView(container);
+        }
+        container.setVisibility(VISIBLE);
+        progress.setVisibility(isProgress ? VISIBLE : GONE);
+        noNetwork.setVisibility(isNoNetwork ? VISIBLE : GONE);
+    }
+
+    public final void hidePanel() {
+        container.setVisibility(GONE);
     }
 }

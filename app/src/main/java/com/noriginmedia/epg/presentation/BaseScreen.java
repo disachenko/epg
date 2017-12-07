@@ -6,4 +6,6 @@ public interface BaseScreen {
     void showProgress();
 
     void hideProgress();
+
+    void showNoNetwork();
 }

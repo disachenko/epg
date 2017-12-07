@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {NetworkModule.class,})
+@Component(modules = {AppModule.class, NetworkModule.class,})
 public interface AppComponent {
 
     NetworkDataSource networkDataSource();

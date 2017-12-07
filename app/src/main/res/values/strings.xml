@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">EPG</string>
 
+    <string name="no_network">waiting for network...</string>
+
     <string-array name="week_days">
         <item>Mon</item>
         <item>Tue</item>

@@ -2,9 +2,7 @@
 <com.noriginmedia.epg.common.view.ProgressPanel xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/progress_panel"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/RootProgressPanelStyle">
 
     <include layout="@layout/header_with_image" />
 

@@ -2,6 +2,7 @@ package com.noriginmedia.epg.presentation.epg;
 
 
 import com.noriginmedia.epg.common.DateUtils;
+import com.noriginmedia.epg.data.network.models.NoNetworkException;
 import com.noriginmedia.epg.data.network.models.response.ChannelSchedulesResponse;
 import com.noriginmedia.epg.presentation.BaseObserver;
 
@@ -42,23 +43,16 @@ public class EpgPresenter {
         }
     }
 
-    private class ScheduleObserver extends BaseObserver<ChannelSchedulesResponse> {
-
-        private EpgScreen view;
+    private class ScheduleObserver extends BaseObserver<ChannelSchedulesResponse, EpgScreen> {
 
         ScheduleObserver(EpgScreen view) {
-            this.view = view;
+            super(view);
         }
 
         @Override
         public void onSuccess(ChannelSchedulesResponse response) {
             view.setDates(dates = getDates(response.getStartDate(), response.getEndDate()));
             view.setEpg(response.getChannels());
-            view.hideProgress();
-        }
-
-        @Override
-        public void onError(Throwable e) {
             view.hideProgress();
         }
     }

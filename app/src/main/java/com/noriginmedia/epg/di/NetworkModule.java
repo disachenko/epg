@@ -1,6 +1,8 @@
 package com.noriginmedia.epg.di;
 
 
+import android.content.Context;
+
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
 import com.noriginmedia.epg.BuildConfig;
@@ -31,7 +33,8 @@ public class NetworkModule {
     }
 
     @Provides
-    Converter.Factory provideLoganConverterFactory() {
+    @Singleton
+    static Converter.Factory provideLoganConverterFactory() {
         LoganSquare.registerTypeConverter(Long.class, new TimestampConverter());
         return LoganSquareConverterFactory.create();
     }
@@ -49,8 +52,8 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    static NetworkDataSource provideNetworkDataSource(Retrofit retrofit) {
-        return new NetworkDataSource(retrofit);
+    static NetworkDataSource provideNetworkDataSource(Context context, Retrofit retrofit) {
+        return new NetworkDataSource(context, retrofit);
     }
 
 }
