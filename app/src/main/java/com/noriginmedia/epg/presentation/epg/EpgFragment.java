@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.noriginmedia.epg.App;
 import com.noriginmedia.epg.R;
+import com.noriginmedia.epg.common.view.ProgressPanel;
 import com.noriginmedia.epg.data.network.models.Channel;
 import com.noriginmedia.epg.presentation.dagger.DaggerScreenComponent;
 import com.noriginmedia.epg.presentation.epg.view.EpgView;
@@ -38,6 +39,9 @@ public class EpgFragment extends Fragment implements EpgScreen {
 
     @BindView(R.id.toolbar_right_button)
     ImageView rightMenuButton;
+
+    @BindView(R.id.progress_panel)
+    ProgressPanel progressPanel;
 
     @BindView(R.id.day_line)
     RecyclerView dayLine;
@@ -89,6 +93,16 @@ public class EpgFragment extends Fragment implements EpgScreen {
         presenter.onDestroyView();
         unbinder.unbind();
         super.onDestroyView();
+    }
+
+    @Override
+    public void showProgress() {
+        progressPanel.showProgress();
+    }
+
+    @Override
+    public void hideProgress() {
+        progressPanel.hideProgress();
     }
 
     @Override

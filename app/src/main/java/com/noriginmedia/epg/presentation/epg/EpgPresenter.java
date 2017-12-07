@@ -23,6 +23,7 @@ public class EpgPresenter {
 
     void onViewCreated(EpgScreen view) {
         this.view = view;
+        view.showProgress();
         interactor.getChannelSchedules(new ScheduleObserver(view));
     }
 
@@ -53,6 +54,12 @@ public class EpgPresenter {
         public void onSuccess(ChannelSchedulesResponse response) {
             view.setDates(dates = getDates(response.getStartDate(), response.getEndDate()));
             view.setEpg(response.getChannels());
+            view.hideProgress();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            view.hideProgress();
         }
     }
 

@@ -12,8 +12,4 @@ public abstract class BaseObserver<R> implements SingleObserver<R> {
     public void onSubscribe(Disposable d) {
         disposable = d;
     }
-
-    @Override
-    public void onError(Throwable e) {
-    }
 }
