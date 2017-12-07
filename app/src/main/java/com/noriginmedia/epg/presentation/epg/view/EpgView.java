@@ -85,7 +85,7 @@ public class EpgView extends LinearLayout {
             return;
         }
 
-        //TODO implement
+        //TODO implement parsing attributes
 
         hourWidth = getResources().getDimensionPixelSize(R.dimen.time_line_hour_width);
     }

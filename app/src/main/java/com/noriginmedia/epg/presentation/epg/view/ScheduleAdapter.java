@@ -65,6 +65,7 @@ public class ScheduleAdapter extends BaseRecyclerAdapter<Schedule, ScheduleAdapt
         }
 
         private void updateViewWidth(long startTime, long endTime) {
+            //TODO receive hourWidth from constructor parameter
             int hourWidth = itemView.getResources().getDimensionPixelSize(R.dimen.time_line_hour_width);
             double duration = endTime - startTime;
 

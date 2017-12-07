@@ -9,12 +9,16 @@ import android.view.View;
 
 /**
  * Adds interior dividers to a RecyclerView with a LinearLayoutManager or its
- * subclass.
+ * subclass.<br/>
+ *
+ * @see <a href=
+ * "https://github.com/bignerdranch/simple-item-decoration/blob/master/simpleitemdecoration/src/main/java/com/dgreenhalgh/android/simpleitemdecoration/linear/DividerItemDecoration.java">
+ * source code</a>
  */
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
-    private Drawable mDivider;
-    private int mOrientation;
+    private Drawable divider;
+    private int orientation;
 
     /**
      * Sole constructor. Takes in a {@link Drawable} to be used as the interior
@@ -23,7 +27,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
      * @param divider A divider {@code Drawable} to be drawn on the RecyclerView
      */
     public DividerItemDecoration(Drawable divider) {
-        mDivider = divider;
+        this.divider = divider;
     }
 
     /**
@@ -35,9 +39,9 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
      */
     @Override
     public void onDraw(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
-        if (mOrientation == LinearLayoutManager.HORIZONTAL) {
+        if (orientation == LinearLayoutManager.HORIZONTAL) {
             drawHorizontalDividers(canvas, parent);
-        } else if (mOrientation == LinearLayoutManager.VERTICAL) {
+        } else if (orientation == LinearLayoutManager.VERTICAL) {
             drawVerticalDividers(canvas, parent);
         }
     }
@@ -60,11 +64,11 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             return;
         }
 
-        mOrientation = ((LinearLayoutManager) parent.getLayoutManager()).getOrientation();
-        if (mOrientation == LinearLayoutManager.HORIZONTAL) {
-            outRect.left = mDivider.getIntrinsicWidth();
-        } else if (mOrientation == LinearLayoutManager.VERTICAL) {
-            outRect.top = mDivider.getIntrinsicHeight();
+        orientation = ((LinearLayoutManager) parent.getLayoutManager()).getOrientation();
+        if (orientation == LinearLayoutManager.HORIZONTAL) {
+            outRect.left = divider.getIntrinsicWidth();
+        } else if (orientation == LinearLayoutManager.VERTICAL) {
+            outRect.top = divider.getIntrinsicHeight();
         }
     }
 
@@ -88,10 +92,10 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
             int parentLeft = child.getRight() + params.rightMargin;
-            int parentRight = parentLeft + mDivider.getIntrinsicWidth();
+            int parentRight = parentLeft + divider.getIntrinsicWidth();
 
-            mDivider.setBounds(parentLeft, parentTop, parentRight, parentBottom);
-            mDivider.draw(canvas);
+            divider.setBounds(parentLeft, parentTop, parentRight, parentBottom);
+            divider.draw(canvas);
         }
     }
 
@@ -115,10 +119,10 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
             int parentTop = child.getBottom() + params.bottomMargin;
-            int parentBottom = parentTop + mDivider.getIntrinsicHeight();
+            int parentBottom = parentTop + divider.getIntrinsicHeight();
 
-            mDivider.setBounds(parentLeft, parentTop, parentRight, parentBottom);
-            mDivider.draw(canvas);
+            divider.setBounds(parentLeft, parentTop, parentRight, parentBottom);
+            divider.draw(canvas);
         }
     }
 }

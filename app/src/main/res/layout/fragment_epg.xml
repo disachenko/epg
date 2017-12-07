@@ -17,7 +17,7 @@
             android:layout_height="@dimen/program_height"
             android:padding="@dimen/padding_default"
             android:src="@drawable/star"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="ContentDescription" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/day_line"
