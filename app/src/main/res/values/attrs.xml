@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="EpgView">
+        <attr name="hourWidth" format="dimension|reference" />
+        <attr name="programSize" format="dimension|reference" />
+        <attr name="timelineHeight" format="dimension|reference" />
+    </declare-styleable>
+
+</resources>

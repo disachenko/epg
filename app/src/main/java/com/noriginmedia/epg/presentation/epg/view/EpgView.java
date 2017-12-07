@@ -3,6 +3,7 @@ package com.noriginmedia.epg.presentation.epg.view;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -80,16 +81,34 @@ public class EpgView extends LinearLayout {
     }
 
     private void applyAttributes(AttributeSet attrs) {
-        if (attrs == null) {
-            return;
-        }
-
-        //TODO implement parsing attributes
-
         Resources res = getResources();
         hourWidth = res.getDimensionPixelSize(R.dimen.epg_timeline_hour_width);
         programSize = res.getDimensionPixelSize(R.dimen.epg_program_size);
         timelineHeight = res.getDimensionPixelSize(R.dimen.list_item_height);
+
+        if (attrs == null) {
+            return;
+        }
+
+        TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.EpgView, 0, 0);
+
+        int count = typedArray.getIndexCount();
+        for (int i = 0; i < count; i++) {
+            int attr = typedArray.getIndex(i);
+
+            switch (attr) {
+                case R.styleable.EpgView_hourWidth:
+                    hourWidth = typedArray.getDimensionPixelSize(attr, hourWidth);
+                    break;
+                case R.styleable.EpgView_programSize:
+                    programSize = typedArray.getDimensionPixelSize(attr, programSize);
+                    break;
+                case R.styleable.EpgView_timelineHeight:
+                    timelineHeight = typedArray.getDimensionPixelSize(attr, timelineHeight);
+            }
+        }
+
+        typedArray.recycle();
     }
 
     private RecyclerView createTimeLine() {
