@@ -47,8 +47,7 @@ public class EpgInteractor extends BaseInteractor {
             }
         }
         response.setStartDate(DateUtils.resetHour(startDate));
-        //TODO remove magic constant 37/22
-        response.setEndDate(DateUtils.resetHour(endDate) + (DateUtils.HOUR * 37 / 22));
+        response.setEndDate(DateUtils.resetHour(endDate) + DateUtils.HOUR);
         return response;
     }
 

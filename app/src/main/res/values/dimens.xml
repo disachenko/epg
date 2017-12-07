@@ -6,6 +6,7 @@
     <dimen name="toolbar_icon_width">56dp</dimen>
     <dimen name="list_item_height">48dp</dimen>
     <dimen name="elevation">8dp</dimen>
+    <dimen name="divider_size">2dp</dimen>
 
     <!-- PADDINGS -->
     <dimen name="padding_huge">24dp</dimen>
@@ -23,10 +24,11 @@
     <dimen name="font_size_micro">12sp</dimen>
     <dimen name="font_size_default">@dimen/font_size_medium</dimen>
 
-    <!--Program Schedule screen-->
-    <dimen name="program_height">70dp</dimen>
+    <!--EPG-->
     <dimen name="day_line_item_width">70dp</dimen>
-    <dimen name="time_line_hour_width">220dp</dimen>
-    <dimen name="divider_size">2dp</dimen>
+    <dimen name="epg_program_size">70dp</dimen>
+    <dimen name="epg_timeline_hour_width">220dp</dimen>
+    <dimen name="epg_timeline_hour_division_height">6dp</dimen>
+    <dimen name="epg_divider_size">@dimen/divider_size</dimen>
 
 </resources>

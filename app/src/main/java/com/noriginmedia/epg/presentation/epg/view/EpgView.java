@@ -2,6 +2,7 @@ package com.noriginmedia.epg.presentation.epg.view;
 
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -24,14 +25,10 @@ import com.noriginmedia.epg.data.network.models.Schedule;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * TODO remove dependencies on Glide
- * TODO create attributes for view
- */
 public class EpgView extends LinearLayout {
 
-    private RecyclerView timeLine;
-    private TimeLineAdapter timeLineAdapter;
+    private RecyclerView timeline;
+    private TimelineAdapter timelineAdapter;
 
     private RecyclerView epg;
     private EpgAdapter epgAdapter;
@@ -39,6 +36,8 @@ public class EpgView extends LinearLayout {
     private EpgScrollListener scrollListener;
 
     private int hourWidth;
+    private int timelineHeight;
+    private int programSize;
 
     public EpgView(Context context) {
         super(context);
@@ -67,17 +66,17 @@ public class EpgView extends LinearLayout {
 
         scrollListener = new EpgScrollListener(this, hourWidth);
 
-        addView(timeLine = createTimeLine());
-        timeLineAdapter = new TimeLineAdapter();
-        timeLine.setAdapter(timeLineAdapter);
-        timeLine.addOnScrollListener(scrollListener);
-        scrollListener.addScrollObserver(timeLine);
+        addView(timeline = createTimeLine());
+        timeline.setAdapter(timelineAdapter = new TimelineAdapter(hourWidth, programSize));
+        timeline.addOnScrollListener(scrollListener);
+        scrollListener.addScrollObserver(timeline);
 
         addView(createDivider());
 
         addView(epg = createEpg());
         scrollListener.setLayoutManager(epg.getLayoutManager(), R.id.schedule);
-        epg.setAdapter(epgAdapter = new EpgAdapter(scrollListener, Glide.with(this)));
+        //TODO remove dependencies on Glide from EpgView
+        epg.setAdapter(epgAdapter = new EpgAdapter(scrollListener, Glide.with(this), hourWidth));
     }
 
     private void applyAttributes(AttributeSet attrs) {
@@ -87,13 +86,15 @@ public class EpgView extends LinearLayout {
 
         //TODO implement parsing attributes
 
-        hourWidth = getResources().getDimensionPixelSize(R.dimen.time_line_hour_width);
+        Resources res = getResources();
+        hourWidth = res.getDimensionPixelSize(R.dimen.epg_timeline_hour_width);
+        programSize = res.getDimensionPixelSize(R.dimen.epg_program_size);
+        timelineHeight = res.getDimensionPixelSize(R.dimen.list_item_height);
     }
 
     private RecyclerView createTimeLine() {
         RecyclerView timeLine = new RecyclerView(getContext());
-        int height = getResources().getDimensionPixelSize(R.dimen.list_item_height);
-        timeLine.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+        timeLine.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, timelineHeight));
         timeLine.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         return timeLine;
@@ -101,7 +102,7 @@ public class EpgView extends LinearLayout {
 
     private View createDivider() {
         View divider = new View(getContext());
-        int height = (int) getResources().getDimension(R.dimen.divider_size);
+        int height = (int) getResources().getDimension(R.dimen.epg_divider_size);
         divider.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         divider.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.divider_color));
         return divider;
@@ -134,11 +135,11 @@ public class EpgView extends LinearLayout {
      * @return -1, if eph is empty
      */
     public long getStartTime() {
-        return timeLineAdapter.getItems().isEmpty() ? -1 : timeLineAdapter.getItem(0);
+        return timelineAdapter.getItems().isEmpty() ? -1 : timelineAdapter.getItem(0);
     }
 
     public void setEpg(List<Channel> schedule) {
-        timeLineAdapter.setItems(getHours(schedule));
+        timelineAdapter.setItems(getHours(schedule));
         epgAdapter.setItems(schedule);
     }
 
@@ -152,9 +153,13 @@ public class EpgView extends LinearLayout {
         long end = schedules.get(schedules.size() - 1).getEnd();
 
         List<Long> hours = DateUtils.split(start, end, DateUtils.HOUR);
-        if (!DateUtils.isSameHour(end, hours.get(hours.size() - 1))) {
-            hours.add(end);
+        if (DateUtils.isSameHour(end, hours.get(hours.size() - 1))) {
+            hours.remove(hours.size() - 1);
         }
+
+        long lastHour = hours.get(hours.size() - 1);
+        long hourOffset = (long) (((double) programSize / hourWidth) * DateUtils.HOUR);
+        hours.add(lastHour + hourOffset);
         return hours;
     }
 

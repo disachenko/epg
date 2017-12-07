@@ -20,8 +20,8 @@ public class DateUtils {
     public static final String DAY_MONTH_PATTERN = "dd.MM";
     public static final String TIME_PATTERN = "HH:mm";
 
-    public static final int HOUR = 60 * 60 * 1000;
-    public static final int DAY = 24 * HOUR;
+    public static final long HOUR = 60 * 60 * 1000;
+    public static final long DAY = 24 * HOUR;
 
 
     public static boolean isSameHour(long firstTimeStamp, long secondTimeStamp) {

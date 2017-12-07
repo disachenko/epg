@@ -1,6 +1,8 @@
 package com.noriginmedia.epg.data.network.models;
 
 
+import android.support.annotation.Nullable;
+
 import com.bluelinelabs.logansquare.annotation.JsonField;
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 import com.noriginmedia.epg.data.network.converters.TimestampConverter;
@@ -8,6 +10,10 @@ import com.noriginmedia.epg.data.network.converters.TimestampConverter;
 @JsonObject
 public class Schedule {
 
+    /**
+     * null if there isn't any program on channel at current time
+     */
+    @Nullable
     @JsonField(name = "id")
     private String id;
 

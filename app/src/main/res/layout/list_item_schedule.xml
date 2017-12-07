@@ -6,7 +6,7 @@
     android:background="@drawable/schedule_background">
 
     <View
-        android:layout_width="@dimen/divider_size"
+        android:layout_width="@dimen/epg_divider_size"
         android:layout_height="match_parent"
         android:background="@color/divider_color" />
 

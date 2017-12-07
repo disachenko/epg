@@ -21,10 +21,12 @@ public class EpgAdapter extends BaseRecyclerAdapter<Channel, EpgAdapter.ChanelVi
 
     private EpgScrollListener channelScrollListener;
     private RequestManager imageRequestManager;
+    private int hourWidth;
 
-    EpgAdapter(EpgScrollListener channelScrollListener, RequestManager imageRequestManager) {
+    EpgAdapter(EpgScrollListener channelScrollListener, RequestManager imageRequestManager, int hourWidth) {
         this.channelScrollListener = channelScrollListener;
         this.imageRequestManager = imageRequestManager;
+        this.hourWidth = hourWidth;
     }
 
     @Override
@@ -59,7 +61,7 @@ public class EpgAdapter extends BaseRecyclerAdapter<Channel, EpgAdapter.ChanelVi
 
             layoutManager = new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
             schedule.setLayoutManager(layoutManager);
-            schedule.setAdapter(scheduleAdapter = new ScheduleAdapter());
+            schedule.setAdapter(scheduleAdapter = new ScheduleAdapter(hourWidth));
         }
 
         @Override
@@ -69,15 +71,14 @@ public class EpgAdapter extends BaseRecyclerAdapter<Channel, EpgAdapter.ChanelVi
             handleScroll(channel);
         }
 
-        //TODO refactoring
         private void handleScroll(Channel channel) {
             schedule.removeOnScrollListener(channelScrollListener);
 
-            int hourWidth = itemView.getResources().getDimensionPixelSize(R.dimen.time_line_hour_width);
             double xScroll = channelScrollListener.getOverallXScroll();
             double timeShift = xScroll / hourWidth * DateUtils.HOUR;
             int pos = 0;
             long time = 0;
+            //TODO think about using binary search instead of it
             for (Schedule schedule : channel.getSchedules()) {
                 pos++;
                 time += schedule.getEnd() - schedule.getStart();

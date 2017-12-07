@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/program_height"
+    android:layout_height="@dimen/epg_program_size"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="@dimen/program_height"
-        android:layout_height="@dimen/program_height"
+        android:layout_width="@dimen/epg_program_size"
+        android:layout_height="@dimen/epg_program_size"
         android:background="@color/dark_gray"
         android:padding="@dimen/padding_small"
         android:src="@drawable/star"
@@ -17,6 +17,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/schedule"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/program_height" />
+        android:layout_height="@dimen/epg_program_size" />
 
 </LinearLayout>

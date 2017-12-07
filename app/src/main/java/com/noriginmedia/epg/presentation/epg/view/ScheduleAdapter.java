@@ -6,10 +6,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.noriginmedia.epg.R;
-import com.noriginmedia.epg.data.network.models.Schedule;
 import com.noriginmedia.epg.common.DateUtils;
 import com.noriginmedia.epg.common.view.recyclerview.BaseRecyclerAdapter;
 import com.noriginmedia.epg.common.view.recyclerview.BaseViewHolder;
+import com.noriginmedia.epg.data.network.models.Schedule;
 
 import java.util.Date;
 
@@ -18,6 +18,11 @@ import butterknife.ButterKnife;
 
 public class ScheduleAdapter extends BaseRecyclerAdapter<Schedule, ScheduleAdapter.ViewHolder> {
 
+    private int hourWidth;
+
+    ScheduleAdapter(int hourWidth) {
+        this.hourWidth = hourWidth;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,10 +70,7 @@ public class ScheduleAdapter extends BaseRecyclerAdapter<Schedule, ScheduleAdapt
         }
 
         private void updateViewWidth(long startTime, long endTime) {
-            //TODO receive hourWidth from constructor parameter
-            int hourWidth = itemView.getResources().getDimensionPixelSize(R.dimen.time_line_hour_width);
             double duration = endTime - startTime;
-
             ViewGroup.LayoutParams params = itemView.getLayoutParams();
             params.width = (int) (duration / DateUtils.HOUR * hourWidth);
             itemView.requestLayout();
