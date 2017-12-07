@@ -14,21 +14,30 @@ import com.noriginmedia.epg.presentation.home.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.navigation_view)
     BottomNavigationView navigationView;
 
+    private Unbinder unbinder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
 
         AndroidUtils.removeShiftMode(navigationView);
         navigationView.setOnNavigationItemSelectedListener(this::showScreen);
         navigationView.setSelectedItemId(R.id.schedule);
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbinder.unbind();
+        super.onDestroy();
     }
 
     private boolean showScreen(MenuItem item) {

@@ -13,6 +13,7 @@ import com.noriginmedia.epg.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Stub implementation
@@ -25,6 +26,8 @@ public class HomeFragment extends Fragment {
     TextView messageTextView;
 
     private String message;
+
+    private Unbinder unbinder;
 
     public static HomeFragment newInstance(String message) {
         Bundle args = new Bundle();
@@ -44,7 +47,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -52,5 +55,11 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         messageTextView.setText(message);
+    }
+
+    @Override
+    public void onDestroyView() {
+        unbinder.unbind();
+        super.onDestroyView();
     }
 }

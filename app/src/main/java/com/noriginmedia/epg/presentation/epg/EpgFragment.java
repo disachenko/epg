@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class EpgFragment extends Fragment implements EpgScreen {
 
@@ -45,6 +46,8 @@ public class EpgFragment extends Fragment implements EpgScreen {
     @BindView(R.id.epg)
     EpgView epgView;
 
+    private Unbinder unbinder;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +60,7 @@ public class EpgFragment extends Fragment implements EpgScreen {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_epg, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -84,6 +87,7 @@ public class EpgFragment extends Fragment implements EpgScreen {
     @Override
     public void onDestroyView() {
         presenter.onDestroyView();
+        unbinder.unbind();
         super.onDestroyView();
     }
 
