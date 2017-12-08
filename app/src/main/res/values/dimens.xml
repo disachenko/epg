@@ -5,7 +5,6 @@
     <dimen name="toolbar_size">@dimen/menu_height</dimen>
     <dimen name="toolbar_icon_width">56dp</dimen>
     <dimen name="list_item_height">48dp</dimen>
-    <dimen name="elevation">8dp</dimen>
     <dimen name="divider_size">1dp</dimen>
     <dimen name="progress_size">52dp</dimen>
 
@@ -32,5 +31,6 @@
     <dimen name="epg_timeline_hour_division_height">6dp</dimen>
     <dimen name="epg_divider_size">@dimen/divider_size</dimen>
     <dimen name="epg_now_button_corner_radius">8dp</dimen>
+    <dimen name="epg_shadow_width">4dp</dimen>
 
 </resources>

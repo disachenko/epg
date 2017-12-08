@@ -12,10 +12,9 @@
         android:layout_marginTop="@dimen/toolbar_size"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="@dimen/epg_program_size"
@@ -27,9 +26,16 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/day_line"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/epg_program_size" />
+                android:layout_height="@dimen/epg_program_size"
+                android:layout_marginLeft="@dimen/epg_program_size" />
 
-        </LinearLayout>
+            <View
+                android:layout_width="@dimen/epg_shadow_width"
+                android:layout_height="@dimen/epg_program_size"
+                android:layout_marginLeft="@dimen/epg_program_size"
+                android:background="@drawable/shadow_right" />
+
+        </FrameLayout>
 
         <include layout="@layout/divider_default" />
 
