@@ -2,6 +2,7 @@
 <resources>
 
     <declare-styleable name="EpgView">
+        <attr name="showCurrentTimeLine" format="boolean|reference" />
         <attr name="hourWidth" format="dimension|reference" />
         <attr name="programSize" format="dimension|reference" />
         <attr name="timelineHeight" format="dimension|reference" />

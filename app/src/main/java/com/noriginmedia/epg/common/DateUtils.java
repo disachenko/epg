@@ -23,6 +23,9 @@ public class DateUtils {
     public static final long HOUR = 60 * 60 * 1000;
     public static final long DAY = 24 * HOUR;
 
+    public static long getCurrentTime() {
+        return System.currentTimeMillis();
+    }
 
     public static boolean isSameHour(long firstTimeStamp, long secondTimeStamp) {
         if (!isSameDay(firstTimeStamp, secondTimeStamp)) {

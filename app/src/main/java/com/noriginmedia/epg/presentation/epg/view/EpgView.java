@@ -12,8 +12,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -26,7 +28,7 @@ import com.noriginmedia.epg.data.network.models.Schedule;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EpgView extends LinearLayout {
+public class EpgView extends FrameLayout {
 
     private RecyclerView timeline;
     private TimelineAdapter timelineAdapter;
@@ -34,11 +36,15 @@ public class EpgView extends LinearLayout {
     private RecyclerView epg;
     private EpgAdapter epgAdapter;
 
+    private View currentTimeLine;
+    private View currentTimeLineBottomPart;
+
     private EpgScrollListener scrollListener;
 
     private int hourWidth;
     private int timelineHeight;
     private int programSize;
+    private boolean showCurrentTimeLine;
 
     public EpgView(Context context) {
         super(context);
@@ -62,22 +68,33 @@ public class EpgView extends LinearLayout {
     }
 
     private void init(AttributeSet attrs) {
-        setOrientation(VERTICAL);
         applyAttributes(attrs);
 
         scrollListener = new EpgScrollListener(this, hourWidth);
 
-        addView(timeline = createTimeLine());
+        timeline = createTimeLine();
         timeline.setAdapter(timelineAdapter = new TimelineAdapter(hourWidth, programSize));
         timeline.addOnScrollListener(scrollListener);
         scrollListener.addScrollObserver(timeline);
 
-        addView(createDivider());
-
-        addView(epg = createEpg());
+        epg = createEpg();
         scrollListener.setLayoutManager(epg.getLayoutManager(), R.id.schedule);
         //TODO remove dependencies on Glide from EpgView
         epg.setAdapter(epgAdapter = new EpgAdapter(scrollListener, Glide.with(this), hourWidth));
+
+
+        ViewGroup epgContainer = createEpgContainer();
+        addView(epgContainer);
+        epgContainer.addView(timeline);
+        epgContainer.addView(createDivider());
+        epgContainer.addView(epg);
+
+        if (showCurrentTimeLine) {
+            currentTimeLine = createCurrentTimeLine();
+            currentTimeLineBottomPart = currentTimeLine.findViewById(R.id.bottom_part);
+            addView(currentTimeLine, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            addOnEpgScrollEventListener(this::updateCurrentTimeLine);
+        }
     }
 
     private void applyAttributes(AttributeSet attrs) {
@@ -85,6 +102,7 @@ public class EpgView extends LinearLayout {
         hourWidth = res.getDimensionPixelSize(R.dimen.epg_timeline_hour_width);
         programSize = res.getDimensionPixelSize(R.dimen.epg_program_size);
         timelineHeight = res.getDimensionPixelSize(R.dimen.list_item_height);
+        showCurrentTimeLine = true;
 
         if (attrs == null) {
             return;
@@ -105,10 +123,21 @@ public class EpgView extends LinearLayout {
                     break;
                 case R.styleable.EpgView_timelineHeight:
                     timelineHeight = typedArray.getDimensionPixelSize(attr, timelineHeight);
+                    break;
+                case R.styleable.EpgView_showCurrentTimeLine:
+                    showCurrentTimeLine = typedArray.getBoolean(attr, showCurrentTimeLine);
             }
         }
 
         typedArray.recycle();
+    }
+
+    private ViewGroup createEpgContainer() {
+        LinearLayout epgContainer = new LinearLayout(getContext());
+        epgContainer.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        epgContainer.setOrientation(LinearLayout.VERTICAL);
+
+        return epgContainer;
     }
 
     private RecyclerView createTimeLine() {
@@ -138,6 +167,30 @@ public class EpgView extends LinearLayout {
         schedule.setHasFixedSize(true);
 
         return schedule;
+    }
+
+    private View createCurrentTimeLine() {
+        View currentTimeLine = LayoutInflater.from(getContext()).inflate(R.layout.view_epg_vertical_timeline, null);
+
+        View topPart = currentTimeLine.findViewById(R.id.top_part);
+        topPart.getLayoutParams().height = timelineHeight;
+
+        View bottomPart = currentTimeLine.findViewById(R.id.bottom_part);
+        ((LayoutParams) bottomPart.getLayoutParams()).topMargin = timelineHeight;
+
+        return currentTimeLine;
+    }
+
+    private void updateCurrentTimeLine(long timestamp) {
+        double hourCount = ((double) (DateUtils.getCurrentTime() - timestamp)) / DateUtils.HOUR;
+        int offsetPx = (int) (hourCount * hourWidth + programSize);
+
+        boolean isOnProgramLogo = offsetPx < programSize;
+        currentTimeLineBottomPart.setVisibility(isOnProgramLogo ? GONE : VISIBLE);
+
+        LayoutParams layoutParams = (LayoutParams) currentTimeLine.getLayoutParams();
+        layoutParams.leftMargin = offsetPx;
+        currentTimeLine.setLayoutParams(layoutParams);
     }
 
     public void setTime(long timestamp) {

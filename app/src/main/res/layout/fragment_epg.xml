@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:hourWidth="@dimen/epg_timeline_hour_width"
+            app:showCurrentTimeLine="true"
             app:timelineHeight="@dimen/list_item_height" />
 
     </LinearLayout>
