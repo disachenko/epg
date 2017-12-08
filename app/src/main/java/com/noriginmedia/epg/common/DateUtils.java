@@ -93,7 +93,7 @@ public class DateUtils {
     }
 
     public static String getTimeRange(long start, long end) {
-        return getLocalTimeString(start) + "-" + getLocalTimeString(end);
+        return getLocalTimeString(start) + " - " + getLocalTimeString(end);
     }
 
     public static String getLocalDayMonthString(Long timestamp) {

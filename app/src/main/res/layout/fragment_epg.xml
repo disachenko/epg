@@ -21,7 +21,7 @@
                 android:layout_width="@dimen/epg_program_size"
                 android:layout_height="@dimen/epg_program_size"
                 android:padding="@dimen/padding_default"
-                android:src="@drawable/star"
+                android:src="@drawable/ic_star"
                 tools:ignore="ContentDescription" />
 
             <android.support.v7.widget.RecyclerView

@@ -6,7 +6,7 @@
     <dimen name="toolbar_icon_width">56dp</dimen>
     <dimen name="list_item_height">48dp</dimen>
     <dimen name="elevation">8dp</dimen>
-    <dimen name="divider_size">2dp</dimen>
+    <dimen name="divider_size">1dp</dimen>
     <dimen name="progress_size">52dp</dimen>
 
     <!-- PADDINGS -->
@@ -19,15 +19,15 @@
     <dimen name="padding_default">@dimen/padding_medium</dimen>
 
     <!-- FONT SIZES -->
-    <dimen name="font_size_huge">24sp</dimen>
-    <dimen name="font_size_large">20sp</dimen>
-    <dimen name="font_size_medium">16sp</dimen>
-    <dimen name="font_size_micro">12sp</dimen>
+    <dimen name="font_size_huge">24dp</dimen>
+    <dimen name="font_size_large">20dp</dimen>
+    <dimen name="font_size_medium">14dp</dimen>
+    <dimen name="font_size_micro">12dp</dimen>
     <dimen name="font_size_default">@dimen/font_size_medium</dimen>
 
     <!--EPG-->
     <dimen name="day_line_item_width">70dp</dimen>
-    <dimen name="epg_program_size">70dp</dimen>
+    <dimen name="epg_program_size">60dp</dimen>
     <dimen name="epg_timeline_hour_width">220dp</dimen>
     <dimen name="epg_timeline_hour_division_height">6dp</dimen>
     <dimen name="epg_divider_size">@dimen/divider_size</dimen>
