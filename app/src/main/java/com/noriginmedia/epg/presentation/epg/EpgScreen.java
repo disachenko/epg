@@ -15,4 +15,10 @@ public interface EpgScreen extends BaseScreen {
     void setSelectedDate(long timestamp);
 
     void setEpg(List<Channel> schedule);
+
+    void setNowButtonVisibility(boolean isVisible);
+
+    long getHourWidth();
+
+    long getProgramSize();
 }

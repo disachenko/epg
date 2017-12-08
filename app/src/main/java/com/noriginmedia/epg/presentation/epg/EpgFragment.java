@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.noriginmedia.epg.R;
+import com.noriginmedia.epg.common.DateUtils;
 import com.noriginmedia.epg.data.network.models.Channel;
 import com.noriginmedia.epg.presentation.BaseFragment;
 import com.noriginmedia.epg.presentation.epg.view.EpgView;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class EpgFragment extends BaseFragment implements EpgScreen {
@@ -43,6 +45,9 @@ public class EpgFragment extends BaseFragment implements EpgScreen {
 
     @BindView(R.id.epg)
     EpgView epgView;
+
+    @BindView(R.id.now)
+    View now;
 
     private Unbinder unbinder;
 
@@ -87,6 +92,11 @@ public class EpgFragment extends BaseFragment implements EpgScreen {
         super.onDestroyView();
     }
 
+    @OnClick(R.id.now)
+    void onNowClick() {
+        epgView.setTime(DateUtils.getCurrentTime());
+    }
+
     @Override
     public void setDates(List<Long> dates) {
         dayLineAdapter.setItems(dates);
@@ -105,5 +115,20 @@ public class EpgFragment extends BaseFragment implements EpgScreen {
     @Override
     public void setEpg(List<Channel> schedule) {
         epgView.setEpg(schedule);
+    }
+
+    @Override
+    public void setNowButtonVisibility(boolean isVisible) {
+        now.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public long getHourWidth() {
+        return epgView.getHourWidth();
+    }
+
+    @Override
+    public long getProgramSize() {
+        return epgView.getProgramSize();
     }
 }

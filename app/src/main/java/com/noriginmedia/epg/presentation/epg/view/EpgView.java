@@ -210,9 +210,12 @@ public class EpgView extends FrameLayout {
         return timelineAdapter.getItems().isEmpty() ? -1 : timelineAdapter.getItem(0);
     }
 
-    public long getEndTime() {
-        List<Long> timeList = timelineAdapter.getItems();
-        return timeList.isEmpty() ? -1 : timeList.get(timeList.size() - 1);
+    public int getHourWidth() {
+        return hourWidth;
+    }
+
+    public int getProgramSize() {
+        return programSize;
     }
 
     public void setEpg(List<Channel> schedule) {

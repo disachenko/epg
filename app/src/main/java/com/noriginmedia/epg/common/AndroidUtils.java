@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import java.lang.reflect.Field;
 
@@ -25,6 +27,14 @@ public class AndroidUtils {
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         intentFilter.setPriority(1000);
         return intentFilter;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public static int getScreenWidthInPx(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        return metrics.widthPixels;
     }
 
     @SuppressLint("RestrictedApi")

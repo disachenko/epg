@@ -43,4 +43,19 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/padding_default"
+        android:background="@drawable/btn_epg_now_background"
+        android:paddingBottom="@dimen/padding_small"
+        android:paddingLeft="@dimen/padding_normal"
+        android:paddingRight="@dimen/padding_normal"
+        android:paddingTop="@dimen/padding_small"
+        android:text="@string/now"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
+
 </com.noriginmedia.epg.common.view.ProgressPanel>

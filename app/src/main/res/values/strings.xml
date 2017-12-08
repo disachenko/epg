@@ -2,6 +2,7 @@
     <string name="app_name">EPG</string>
 
     <string name="no_network">waiting for network...</string>
+    <string name="now">now</string>
 
     <string-array name="week_days">
         <item>Mon</item>

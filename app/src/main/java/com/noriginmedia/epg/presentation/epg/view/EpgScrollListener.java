@@ -33,6 +33,7 @@ public class EpgScrollListener extends RecyclerView.OnScrollListener {
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         doSynchronousScroll(recyclerView, dx, dy);
+        notifyListeners();
     }
 
     void setLayoutManager(RecyclerView.LayoutManager layoutManager, @IdRes int recyclerViewId) {
@@ -56,12 +57,12 @@ public class EpgScrollListener extends RecyclerView.OnScrollListener {
         int dx = overallXScroll - this.overallXScroll;
         doSynchronousScroll(null, dx, 0);
         this.overallXScroll = overallXScroll;
+        notifyListeners();
     }
 
     private void doSynchronousScroll(RecyclerView recyclerView, int dx, int dy) {
         scrollItemsFromLayoutManager(recyclerView, dx, dy);
         scrollObservers(recyclerView, dx, dy);
-        notifyListeners();
     }
 
     private void scrollItemsFromLayoutManager(RecyclerView recyclerView, int dx, int dy) {
